@@ -1,3 +1,12 @@
+<!-- Language Navigation -->
+<div align="center">
+
+[🇪🇸 **Español**](#curso-de-machine-learning) | [🇺🇸 **English**](#machine-learning-course)
+
+</div>
+
+---
+
 # Curso de Machine Learning
 
 Este repositorio contiene un curso completo de Machine Learning con enfoque práctico, organizado en 10 módulos semanales con ejercicios, proyectos y documentación detallada.
@@ -146,3 +155,154 @@ Este repositorio está licenciado bajo la [Licencia MIT](LICENSE).
 ---
 
 > 📌 **Nota:** Este curso está diseñado para ser práctico y hands-on. Cada módulo incluye teoría, ejemplos de código y ejercicios para reforzar el aprendizaje.
+
+---
+
+# Machine Learning Course
+
+This repository contains a complete Machine Learning course with a practical approach, organized in 10 weekly modules with exercises, projects, and detailed documentation.
+
+## 📚 Content by week
+
+| Week     | Content                                                      |
+| -------- | ------------------------------------------------------------|
+| Week 1   | [Machine Learning Fundamentals](./week1/)                   |
+| Week 2   | [Supervised Algorithms - Regression](./week2/)              |
+| Week 3   | [Supervised Algorithms - Classification](./week3/)          |
+| Week 4   | [Trees and Ensemble Methods](./week4/)                      |
+| Week 5   | [Unsupervised Algorithms](./week5/)                         |
+| Week 6   | [Deep Learning - Fundamentals](./week6/)                    |
+| Week 7   | [Deep Learning - CNN](./week7/)                             |
+| Week 8   | [Deep Learning - RNN/LSTM](./week8/)                        |
+| Week 9   | [Evaluation and Optimization](./week9/)                     |
+| Week 10  | [Final Project and Deployment](./week10/)                   |
+
+*Each `weekX/` folder includes notebooks, data, and specific module dependencies.*
+
+## ✅ Assignments by week
+
+| Week     | Assignments                                                  |
+| -------- | ------------------------------------------------------------|
+| Week 1   | [Assignment - ML Fundamentals](./homework1/)                |
+| Week 2   | [Assignment - Regression](./homework2/)                     |
+| Week 3   | [Assignment - Classification](./homework3/)                 |
+| Week 4   | [Assignment - Trees and Ensemble](./homework4/)             |
+| Week 5   | [Assignment - Unsupervised](./homework5/)                   |
+| Week 6   | [Assignment - Deep Learning - Fundamentals](./homework6/)   |
+| Week 7   | [Assignment - CNN](./homework7/)                            |
+| Week 8   | [Assignment - RNN/LSTM](./homework8/)                       |
+| Week 9   | [Assignment - Evaluation and Optimization](./homework9/)    |
+| Week 10  | [Assignment - Final Project](./homework10/)                 |
+
+*In the `homeworkX/` folders you'll find practical challenges to reinforce what you learned each week.*
+
+## 🛠️ Workshops and Projects
+
+| Workshop    | Project                                                      |
+| ----------- | ------------------------------------------------------------|
+| Workshop 1  | [Classification Project](./workshop1/)                      |
+| Workshop 2  | [Regression Project](./workshop2/)                           |
+| Workshop 3  | [Deep Learning Project](./workshop3/)                       |
+
+*The workshops include complete practical projects with results analysis.*
+
+## 🛠️ How to use this repository
+
+### 1. Environment setup
+
+This project uses `uv` as the dependency manager. For more details, check the [working-with-uv.md](./docs/working-with-uv.md) guide.
+
+```bash
+# Install uv (if you don't have it)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Clone the repository
+git clone <repository-url>
+cd ml-zoomcamp-knowledge-base
+```
+
+### 2. Working with a specific module
+
+Each module has its own virtual environment and dependencies:
+
+```bash
+# Navigate to the module
+cd week1
+
+# Create and activate virtual environment
+uv venv && uv sync
+
+# Activate environment
+source .venv/bin/activate
+
+# Start Jupyter
+jupyter notebook
+```
+
+### 3. Module structure
+
+- `notebook/` - Jupyter notebooks with module content
+- `img/` - Images and diagrams
+- `data/` - Module-specific datasets
+- `pyproject.toml` - Module dependencies
+- `uv.lock` - Locked versions for reproducibility
+
+### 4. Complete assignments
+
+```bash
+# Navigate to assignment
+cd homework1
+
+# Set up environment
+uv venv && uv sync
+
+# Activate environment
+source .venv/bin/activate
+
+# Start Jupyter
+jupyter notebook
+```
+
+## 📁 Repository structure
+
+```
+ml-zoomcamp-knowledge-base/
+├── week1-10/       # Course modules (10 weeks)
+├── homework1-10/   # Weekly assignments
+├── workshop1-3/    # Practical projects
+├── docs/           # Additional documentation
+├── data/           # Global datasets
+├── src/            # Reusable source code
+├── tests/          # Unit tests
+└── .github/        # GitHub Actions
+```
+
+## 🔧 Tools and technologies
+
+- **Python 3.13+** - Main language
+- **uv** - Dependency manager
+- **Jupyter Notebooks** - Development environment
+- **scikit-learn** - ML algorithms
+- **pandas** - Data manipulation
+- **matplotlib/seaborn** - Visualization
+- **tensorflow/pytorch** - Deep Learning
+- **GitHub Actions** - CI/CD
+
+## 📖 Additional documentation
+
+- [Environment setup](./docs/setup-environment.md)
+- [uv usage guide](./docs/working-with-uv.md)
+- [Theoretical material](./docs/teoria/)
+- [References and bibliography](./docs/referencias/)
+
+## 🤝 Contributing
+
+If you want to improve or add content, open an issue or send a pull request.
+
+## 📝 License
+
+This repository is licensed under the [MIT License](LICENSE).
+
+---
+
+> 📌 **Note:** This course is designed to be practical and hands-on. Each module includes theory, code examples, and exercises to reinforce learning.
