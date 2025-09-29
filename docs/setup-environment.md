@@ -89,6 +89,95 @@ week1/
 └── notebook/      # Jupyter notebooks
 ```
 
+## Script de Lanzamiento Automático
+
+Para facilitar el trabajo con los diferentes módulos del curso, hemos incluido un script que automatiza el proceso de navegación y lanzamiento de Jupyter Lab.
+
+### Características del Script
+
+El script `jupyter_launcher.sh` incluye:
+
+- **Menú interactivo organizado** por categorías (Semanas, Homework, Workshops)
+- **Navegación automática** a la carpeta seleccionada
+- **Lanzamiento automático** de Jupyter Lab con `uv run`
+- **Limpieza de entornos virtuales** no utilizados
+- **Interfaz colorizada** y fácil de usar
+
+### Uso del Script
+
+```bash
+# Hacer el script ejecutable (solo la primera vez)
+chmod +x jupyter_launcher.sh
+
+# Ejecutar el script
+./jupyter_launcher.sh
+```
+
+### Estructura del Menú
+
+El script presenta un menú principal con las siguientes opciones:
+
+1. ** Semanas (week1-week10)** - Acceso a los módulos del curso
+2. **📝 Homework (homework1-homework10)** - Acceso a las tareas
+3. ** Workshops (workshop1-workshop3)** - Acceso a los proyectos
+4. **🧹 Limpiar archivos .venv** - Limpieza de entornos virtuales
+5. **Salir** - Salir del script
+
+### Submenús
+
+Al seleccionar una categoría, se muestra un submenú con las opciones específicas:
+
+- **Semanas**: week1, week2, ..., week10
+- **Homework**: homework1, homework2, ..., homework10  
+- **Workshops**: workshop1, workshop2, workshop3
+
+### Funcionalidad de Limpieza
+
+La opción "🧹 Limpiar archivos .venv" permite:
+
+- **Buscar automáticamente** todas las carpetas `.venv` en el proyecto
+- **Mostrar una lista** de lo que se va a eliminar
+- **Solicitar confirmación** antes de proceder
+- **Eliminar de forma segura** con mensajes de estado
+
+### Ejemplo de Uso
+
+```bash
+$ ./jupyter_launcher.sh
+
+========================================
+   ML ZOOMCAMP - JUPYTER LAB LAUNCHER  
+========================================
+
+Selecciona una opción:
+
+1) 📚 Semanas (week1-week10)
+2) 📝 Homework (homework1-homework10)
+3) 🔧 Workshops (workshop1-workshop3)
+4) 🧹 Limpiar archivos .venv
+5) Salir
+
+Ingresa tu opción (1-5): 1
+
+========================================
+        SELECCIONAR SEMANA
+========================================
+
+Selecciona una semana:
+
+1) week1
+2) week2
+3) week3
+...
+10) week10
+11) Volver al menú principal
+
+Ingresa tu opción (1-11): 1
+
+✅ Navegando a week1...
+✅ Lanzando Jupyter Lab...
+```
+
 ## Comandos Útiles
 
 ### Activar/Desactivar entorno

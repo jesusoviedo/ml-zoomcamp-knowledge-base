@@ -88,6 +88,23 @@ source .venv/bin/activate
 jupyter notebook
 ```
 
+### 🚀 Script de Lanzamiento Automático
+
+Para facilitar el trabajo con los diferentes módulos, hemos incluido un script que automatiza el proceso:
+
+```bash
+# Ejecutar el script de lanzamiento
+./jupyter_launcher.sh
+```
+
+Este script te permite:
+- **Navegar fácilmente** entre semanas, homework y workshops
+- **Lanzar Jupyter Lab automáticamente** en la carpeta seleccionada
+- **Limpiar entornos virtuales** no utilizados
+- **Menú interactivo** organizado por categorías
+
+Para más detalles sobre el uso del script, consulta la [guía de configuración del entorno](./docs/setup-environment.md#script-de-lanzamiento-automático).
+
 ### 3. Estructura de cada módulo
 
 - `notebook/` - Jupyter notebooks con el contenido del módulo

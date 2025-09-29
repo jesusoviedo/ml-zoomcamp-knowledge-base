@@ -165,5 +165,26 @@ logs/
 tmp/
 temp/
 
-# Data files 
+# Week data files
+week1/data/
+week2/data/
+week3/data/
+week4/data/
+week5/data/
+week6/data/
+week7/data/
+week8/data/
+week9/data/
+week10/data/
+
+# Homework data files
 homework1/notebook/data/
+homework2/notebook/data/
+homework3/notebook/data/
+homework4/notebook/data/
+homework5/notebook/data/
+homework6/notebook/data/
+homework7/notebook/data/
+homework8/notebook/data/
+homework9/notebook/data/
+homework10/notebook/data/
