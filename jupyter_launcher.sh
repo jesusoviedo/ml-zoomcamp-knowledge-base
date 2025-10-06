@@ -120,26 +120,148 @@ check_folder() {
     fi
 }
 
+# Función para verificar si Jupyter está corriendo
+check_jupyter_running() {
+    if lsof -i :8888 >/dev/null 2>&1; then
+        return 0  # Jupyter está corriendo
+    else
+        return 1  # Jupyter no está corriendo
+    fi
+}
+
 # Función para lanzar Jupyter Lab
 launch_jupyter() {
     local folder=$1
-    echo -e "${BLUE}Cambiando a la carpeta: ${YELLOW}$folder${NC}"
+    echo -e "${BLUE}📁 Cambiando a la carpeta: ${YELLOW}$folder${NC}"
     
-    if check_folder "$folder"; then
-        cd "$folder" || {
-            echo -e "${RED}Error: No se pudo acceder a la carpeta $folder${NC}"
-            exit 1
-        }
+    # Verificar si Jupyter está corriendo
+    echo -e "${BLUE}🔍 Verificando si Jupyter está corriendo...${NC}"
+    
+    if check_jupyter_running; then
+        echo -e "${YELLOW}⚠️  Jupyter ya está corriendo en puerto 8888${NC}"
         
-        echo -e "${GREEN}Directorio actual: ${YELLOW}$(pwd)${NC}"
-        echo -e "${BLUE}Lanzando Jupyter Lab con uv run...${NC}"
+        # Obtener información del proceso
+        jupyter_pid=$(lsof -ti :8888)
+        echo -e "${YELLOW}📊 PID del proceso: $jupyter_pid${NC}"
         echo ""
         
-        # Lanzar Jupyter Lab con uv run
-        uv run jupyter lab
+        echo -e "${YELLOW}¿Qué deseas hacer?${NC}"
+        echo -e "${GREEN}1.${NC} Eliminar Jupyter existente y lanzar uno nuevo"
+        echo -e "${GREEN}2.${NC} Usar Jupyter existente"
+        echo ""
+        
+        read -p "Selecciona opción (1-2): " option
+        
+        case "$option" in
+            1)
+                echo -e "${BLUE}🔄 Eliminando Jupyter existente...${NC}"
+                kill $(lsof -ti :8888) 2>/dev/null
+                sleep 2
+                
+                # Verificar si se terminó
+                if check_jupyter_running; then
+                    echo -e "${RED}⚠️  Forzando terminación...${NC}"
+                    kill -9 $(lsof -ti :8888) 2>/dev/null
+                    sleep 1
+                fi
+                
+                if ! check_jupyter_running; then
+                    echo -e "${GREEN}✅ Jupyter eliminado correctamente${NC}"
+                else
+                    echo -e "${RED}❌ No se pudo eliminar Jupyter${NC}"
+                    echo -e "${YELLOW}Presiona Enter para continuar...${NC}"
+                    read -r
+                    return 1
+                fi
+                echo ""
+                ;;
+            2)
+                echo -e "${GREEN}✅ Usando Jupyter existente${NC}"
+                echo ""
+                echo -e "${YELLOW}📋 URL para acceder a Jupyter Lab:${NC}"
+                echo -e "${GREEN}http://localhost:8888/lab${NC}"
+                echo ""
+                echo -e "${BLUE}💡 Abre esta URL en tu navegador${NC}"
+                echo -e "${YELLOW}Presiona Enter para continuar...${NC}"
+                read -r
+                return 0
+                ;;
+            *)
+                echo -e "${BLUE}🔄 Eliminando Jupyter existente (opción por defecto)...${NC}"
+                kill $(lsof -ti :8888) 2>/dev/null
+                sleep 2
+                echo ""
+                ;;
+        esac
+    else
+        echo -e "${GREEN}✅ No hay Jupyter corriendo${NC}"
+        echo ""
+    fi
+    
+    # Verificar y cambiar al directorio
+    if check_folder "$folder"; then
+        cd "$folder" || {
+            echo -e "${RED}❌ Error: No se pudo acceder a la carpeta $folder${NC}"
+            echo -e "${YELLOW}Presiona Enter para continuar...${NC}"
+            read -r
+            return 1
+        }
+        
+        echo -e "${GREEN}✅ Directorio actual: ${YELLOW}$(pwd)${NC}"
+        echo ""
+        
+        # Verificar si Jupyter está instalado
+        echo -e "${BLUE}🔍 Verificando si Jupyter está instalado...${NC}"
+        if uv run python -c "import jupyter" 2>/dev/null; then
+            echo -e "${GREEN}✅ Jupyter está instalado${NC}"
+        else
+            echo -e "${YELLOW}⚠️  Jupyter no está instalado. Instalando...${NC}"
+            uv add jupyter
+            if [ $? -eq 0 ]; then
+                echo -e "${GREEN}✅ Jupyter instalado correctamente${NC}"
+            else
+                echo -e "${RED}❌ Error al instalar Jupyter${NC}"
+                echo -e "${YELLOW}Presiona Enter para continuar...${NC}"
+                read -r
+                return 1
+            fi
+        fi
+        echo ""
+        
+        # Lanzar Jupyter Lab
+        echo -e "${BLUE}🚀 Lanzando Jupyter Lab...${NC}"
+        echo ""
+        echo -e "${YELLOW}📋 URL para acceder a Jupyter Lab:${NC}"
+        echo -e "${GREEN}http://localhost:8888/lab${NC}"
+        echo ""
+        echo -e "${BLUE}💡 Esta URL NO requiere token - ábrela directamente en tu navegador${NC}"
+        echo ""
+        
+        # Lanzar Jupyter Lab en background y capturar logs
+        echo -e "${BLUE}🔄 Iniciando servidor en segundo plano...${NC}"
+        uv run jupyter lab --no-browser --allow-root --ip=0.0.0.0 --port=8888 > /dev/null 2>&1 &
+        jupyter_pid=$!
+        
+        # Esperar un momento para que el servidor se inicie
+        sleep 3
+        
+        # Verificar si el servidor está corriendo
+        if ps -p $jupyter_pid > /dev/null 2>&1; then
+            echo -e "${GREEN}✅ Servidor Jupyter iniciado correctamente${NC}"
+            echo ""
+            echo -e "${YELLOW}📱 El servidor está corriendo en segundo plano${NC}"
+            echo -e "${BLUE}💡 Puedes cerrar esta ventana y usar Jupyter Lab${NC}"
+            echo ""
+            echo -e "${YELLOW}Presiona Enter para volver al menú principal...${NC}"
+            read -r
+        else
+            echo -e "${RED}❌ Error al iniciar el servidor Jupyter${NC}"
+            echo -e "${YELLOW}Presiona Enter para continuar...${NC}"
+            read -r
+        fi
         
     else
-        echo -e "${RED}Error: La carpeta '$folder' no existe${NC}"
+        echo -e "${RED}❌ Error: La carpeta '$folder' no existe${NC}"
         echo -e "${YELLOW}Presiona Enter para continuar...${NC}"
         read -r
         return 1
